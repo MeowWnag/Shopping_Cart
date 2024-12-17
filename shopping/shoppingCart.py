@@ -44,41 +44,51 @@ class ShoppingCart:
                 self.shopping_cart.clear()
                 print(f"\n付款成功！剩餘餘額: ${self.user_balance}")
 
-    # def checkBalance(self):
-    #     if self.user_balance > 0:
-    #         print(f"\n剩餘餘額: ${self.user_balance}")
-    #     else:
-    #         print("\n餘額不足")
+    def checkBalance(self):
+         if self.user_balance > 0:
+             print(f"\n剩餘餘額: ${self.user_balance}")
+         else:
+             print("\n餘額不足")
+
+    def remove_from_cart(self, product_id):
+        product_in_cart = next((item for item in self.shopping_cart if item['id'] == product_id), None)
+        if product_in_cart:
+            self.shopping_cart.remove(product_in_cart)
+            print(f"\n{self.products[product_id]['name']} 已從購物車移除。")
+        else:
+            print("\n購物車中沒有該商品，無法移除。")
 
 if __name__ == '__main__':
     cart = ShoppingCart()
 
     while True:
-      print("\n選項:\n")
-      print("1. 加入商品到購物車")
-      print("2. 顯示購物車內容")
-      print("3. 付款")
-      print("4. 離開")
-    #   print("5. 查看餘額")
+        print("\n選項:\n")
+        print("1. 查看商品")
+        print("2. 加入商品到購物車")
+        print("3. 查看購物車")
+        print("4. 移除購物車內的商品")  # 新增選項
+        print("5. 結帳")
+        print("6. 檢查餘額")
+        print("7. 離開")
+        choice = input("請選擇操作編號：")
 
-      choice = input("\n請輸入選項 (1/2/3/4): ")
-
-      if choice == "1":
-          product_id = int(input("\n請輸入要加入購物車的商品編號: "))
-          cart.add_to_cart(product_id)
-
-      elif choice == "2":
-          cart.view_cart()
-
-      elif choice == "3":
-          cart.checkout()
-
-      elif choice == "4":
-          print("\n謝謝光臨，再見！")
-          break
-
-    #   elif choice == "5":
-    #       cart.checkBalance()
-
-      else:
-          print("\n無效的選項，請重新輸入。")
+        if choice == '4':
+            product_id = int(input("請輸入要移除的商品編號："))
+            cart.remove_from_cart(product_id)
+        elif choice == '1':
+            for product_id, product_info in cart.products.items():
+                print(f"商品編號: {product_id}, 名稱: {product_info['name']}, 價格: ${product_info['price']}, 庫存: {product_info['quantity']}")
+        elif choice == '2':
+            product_id = int(input("\n請輸入要加入購物車的商品編號: "))
+            cart.add_to_cart(product_id)
+        elif choice == '3':
+            cart.view_cart()
+        elif choice == '5':
+            cart.checkout()
+        elif choice == '6':
+            cart.checkBalance()
+        elif choice == '7':
+            print("\n謝謝光臨，再見！")
+            break
+        else:
+            print("\n無效的選項，請重新輸入。")
