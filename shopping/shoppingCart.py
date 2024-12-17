@@ -58,6 +58,13 @@ class ShoppingCart:
         else:
             print("\n購物車中沒有該商品，無法移除。")
 
+    def check_balance(self, balance, amount):
+        remaining = balance - amount
+        if remaining >= 0:
+            return remaining
+        else:
+            return "餘額不足"
+
 if __name__ == '__main__':
     cart = ShoppingCart()
 
